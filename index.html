@@ -84,6 +84,21 @@ td.age{color:#5a5a72;font-size:12px}
 col.c-yr{width:34px}
 td.yr{color:#5a5a72;font-size:12px}
 @media(max-width:380px){col.c-yr{width:30px}}
+/* NAMES AND SCHOOLS IN FULL (v1.1), the All-World page's rule: columns sized
+   by what is in them -- the name on one line, its column as wide as the
+   longest name in that table; the school takes what is left and wraps, never
+   cut. The WNBA page's 52px team column is for three-letter codes. Under
+   600px a table too wide for the screen scrolls sideways. These come after
+   the imported rules, so they also outrank their small-screen widths. */
+table{table-layout:auto}
+col.c-pl,col.c-tm{width:auto}
+td.pl{white-space:nowrap;overflow:visible;text-overflow:clip}
+td.tm{white-space:normal;line-height:1.25;letter-spacing:0;min-width:90px;
+  overflow:visible;text-overflow:clip}
+td.age,td.yr,td.rat{overflow:visible;text-overflow:clip}
+@media(max-width:600px){
+  section{overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
 </style></head><body><div class="wrap">
 <h2>NCAA &mdash; Global Rating</h2>
 <section id="all"><h3>Top 30</h3><table><colgroup><col class="c-rk"><col class="c-fl"><col class="c-pl"><col class="c-tm"><col class="c-age"><col class="c-yr"><col class="c-rat"><col class="c-gp"><col class="c-num"><col class="c-num"><col class="c-num"></colgroup><thead><tr>
