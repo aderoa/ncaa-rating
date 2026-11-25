@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NCAA Global Rating</title>
+<style>
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;padding:0;background:#fff;
+  font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,
+  sans-serif;color:#1a1a2e}
+.wrap{max-width:640px;margin:0 auto;padding:2px}
+h2{margin:0 0 8px;font-size:17px;letter-spacing:-.2px}
+section{display:block;margin:0 0 26px}
+section > h3{margin:0 0 8px;font-size:15px;letter-spacing:-.1px;color:#1a1a2e;
+  font-weight:700;padding-bottom:4px;border-bottom:2px solid #ecedf3}
+section h4{margin:16px 0 5px;font-size:12px;color:#5a5a72;font-weight:700;
+  text-transform:uppercase;letter-spacing:.4px}
+/* EVERY TABLE THE SAME SHAPE.
+   With auto layout each table sizes itself to its own contents, so the Rookies
+   table put Player in a different place from the Top 30 and the eye had to find
+   the columns again at every heading. Fixed layout plus one set of widths makes
+   them all agree -- the name column is wide enough for the longest in the league,
+   and the numbers line up straight down the page. */
+table{border-collapse:collapse;width:100%;table-layout:fixed}
+/* Wide enough for three digits. A team table carries LEAGUE positions, so it
+   reaches 226 -- and at 30px those truncated to "1..." and "2...", which is worse
+   than no number at all. */
+col.c-rk{width:38px}
+col.c-fl{width:26px}
+col.c-pl{width:auto}
+col.c-tm{width:52px}
+col.c-rat{width:60px}
+col.c-gp{width:42px}
+col.c-num{width:52px}
+th,td{padding:5px 6px;border-bottom:1px solid #ecedf3;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+/* THE NAME WRAPS RATHER THAN TRUNCATES.
+   Everything else in the row is short and fixed, so the name is the only column
+   that can run out of room -- and on a phone it did, leaving "A'ja W..." and
+   "Jonqu...". A name is the one thing a reader cannot reconstruct from a
+   fragment, so it takes a second line instead of losing its end. */
+td.pl{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.25}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:#6a6a80;
+  text-align:right;border-bottom:1px solid #d8d9e3}
+th.l,td.l{text-align:left}
+td{text-align:right;font-variant-numeric:tabular-nums}
+/* Never clipped: a rank that reads "1..." could be 1, 14 or 226. */
+td.rk{color:#9a9ab0;font-size:12px;overflow:visible;text-overflow:clip}
+td.fl{width:1%;padding-right:0}
+td.fl img{display:block;width:19px;height:auto;border-radius:2px}
+td.pl{font-weight:600}
+td.tm{color:#5a5a72;font-size:12px;letter-spacing:.3px}
+td.rat{font-weight:700;color:#8a5a00}
+tr:nth-child(even) td{background:#fafafd}
+th[data-s]{cursor:pointer}
+th[data-s]:hover{color:#1a1a2e}
+th[aria-sort]{color:#8a5a00}
+th[aria-sort="descending"]::after{content:" ↓"}
+th[aria-sort="ascending"]::after{content:" ↑"}
+.none{color:#8a8aa0;font-size:12px;margin:4px 0 0}
+/* On a phone the numbers give up their padding first, so the name keeps as much
+   width as possible before it has to wrap at all. */
+@media(max-width:560px){
+  th,td{padding:5px 2px;font-size:13px}
+  col.c-rk{width:32px}
+  col.c-fl{width:22px}
+  col.c-tm{width:38px}
+  col.c-rat{width:48px}
+  col.c-gp{width:28px}
+  col.c-num{width:38px}
+  th{font-size:10px;letter-spacing:.2px}
+}
+@media(max-width:380px){
+  col.c-gp{width:24px}
+  col.c-num{width:34px}
+  th,td{font-size:12px}
+}
+
+col.c-age{width:54px}
+td.age{color:#5a5a72;font-size:12px}
+@media(max-width:560px){col.c-age{width:46px}}
+@media(max-width:380px){col.c-age{width:42px}}
+
+col.c-yr{width:34px}
+td.yr{color:#5a5a72;font-size:12px}
+@media(max-width:380px){col.c-yr{width:30px}}
+</style></head><body><div class="wrap">
+<h2>NCAA &mdash; Global Rating</h2>
+<section id="all"><h3>Top 30</h3><table><colgroup><col class="c-rk"><col class="c-fl"><col class="c-pl"><col class="c-tm"><col class="c-age"><col class="c-yr"><col class="c-rat"><col class="c-gp"><col class="c-num"><col class="c-num"><col class="c-num"></colgroup><thead><tr>
+<th></th><th></th>
+<th class="l" data-s="t">Player</th><th class="l" data-s="t"></th><th data-s="n">Age</th><th data-s="t">Yr</th>
+<th data-s="n">Rat</th><th data-s="n">GP</th><th data-s="n">Pts</th>
+<th data-s="n">Reb</th><th data-s="n">Ast</th>
+</tr></thead><tbody><tr><td class="rk">1</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Dedan Thomas</td><td class="l tm">Houston</td><td class="age">21-078</td><td class="yr">Sr</td><td class="rat">24.81</td><td>6</td><td>20.0</td><td>1.7</td><td>5.7</td></tr>
+<tr><td class="rk">2</td><td class="fl"><img src="https://flagcdn.com/w40/lt.png" alt="" loading="lazy"></td><td class="l pl">Paulius Murauskas</td><td class="l tm">Arizona State</td><td class="age">22-284</td><td class="yr">Sr</td><td class="rat">23.43</td><td>5</td><td>26.0</td><td>9.2</td><td>3.0</td></tr>
+<tr><td class="rk">3</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Pryce Sandfort</td><td class="l tm">Nebraska</td><td class="age">22-155</td><td class="yr">Jr</td><td class="rat">23.28</td><td>6</td><td>20.0</td><td>5.2</td><td>2.8</td></tr>
+<tr><td class="rk">4</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Dior Johnson</td><td class="l tm">UCF</td><td class="age">22-301</td><td class="yr">Sr</td><td class="rat">23.22</td><td>6</td><td>29.0</td><td>4.2</td><td>3.5</td></tr>
+<tr><td class="rk">5</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Rodney Rice</td><td class="l tm">USC</td><td class="age">24-004</td><td class="yr">Sr</td><td class="rat">22.77</td><td>6</td><td>20.8</td><td>4.0</td><td>5.8</td></tr>
+<tr><td class="rk">6</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Tyler Tanner</td><td class="l tm">Vanderbilt</td><td class="age">20-297</td><td class="yr">Jr</td><td class="rat">22.72</td><td>7</td><td>18.9</td><td>6.3</td><td>3.6</td></tr>
+<tr><td class="rk">7</td><td class="fl"><img src="https://flagcdn.com/w40/gr.png" alt="" loading="lazy"></td><td class="l pl">Andrej Stojakovic</td><td class="l tm">Illinois</td><td class="age">22-100</td><td class="yr">Sr</td><td class="rat">22.08</td><td>7</td><td>24.3</td><td>5.0</td><td>3.3</td></tr>
+<tr><td class="rk">8</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Vince Iwuchukwu</td><td class="l tm">Georgetown</td><td class="age">23-222</td><td class="yr">Sr</td><td class="rat">20.77</td><td>6</td><td>20.8</td><td>9.2</td><td>0.5</td></tr>
+<tr><td class="rk">9</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jayden Reid</td><td class="l tm">Memphis</td><td class="age">22-085</td><td class="yr">Sr</td><td class="rat">20.67</td><td>5</td><td>21.2</td><td>2.6</td><td>4.6</td></tr>
+<tr><td class="rk">10</td><td class="fl"><img src="https://flagcdn.com/w40/de.png" alt="" loading="lazy"></td><td class="l pl">Ivan Kharchenkov</td><td class="l tm">Arizona</td><td class="age">20-066</td><td class="yr">So</td><td class="rat">20.48</td><td>7</td><td>21.7</td><td>7.4</td><td>5.4</td></tr>
+<tr><td class="rk">11</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Alijah Arenas</td><td class="l tm">USC</td><td class="age">19-254</td><td class="yr">So</td><td class="rat">20.24</td><td>6</td><td>21.3</td><td>4.0</td><td>2.2</td></tr>
+<tr><td class="rk">12</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jeremy Fears</td><td class="l tm">Michigan State</td><td class="age">21-220</td><td class="yr">Sr</td><td class="rat">19.87</td><td>6</td><td>16.7</td><td>2.0</td><td>9.3</td></tr>
+<tr><td class="rk">13</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Ben Hammond</td><td class="l tm">Virginia Tech</td><td class="age">22-054</td><td class="yr">Jr</td><td class="rat">19.59</td><td>7</td><td>20.6</td><td>3.3</td><td>5.1</td></tr>
+<tr><td class="rk">14</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Thomas Haugh</td><td class="l tm">Florida</td><td class="age">23-141</td><td class="yr">Sr</td><td class="rat">19.44</td><td>8</td><td>17.4</td><td>7.0</td><td>2.5</td></tr>
+<tr><td class="rk">15</td><td class="fl"><img src="https://flagcdn.com/w40/lt.png" alt="" loading="lazy"></td><td class="l pl">Motiejus Krivas</td><td class="l tm">Arizona</td><td class="age">21-359</td><td class="yr">Sr</td><td class="rat">19.29</td><td>7</td><td>17.9</td><td>8.9</td><td>2.4</td></tr>
+<tr><td class="rk">16</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Mason Falslev</td><td class="l tm">Utah State</td><td class="age">25-026</td><td class="yr">Sr</td><td class="rat">19.01</td><td>5</td><td>21.2</td><td>8.8</td><td>5.2</td></tr>
+<tr><td class="rk">17</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Quentin Coleman</td><td class="l tm">Illinois</td><td class="age">18-140</td><td class="yr">Fr</td><td class="rat">18.61</td><td>6</td><td>20.7</td><td>6.8</td><td>4.7</td></tr>
+<tr><td class="rk">18</td><td class="fl"><img src="https://flagcdn.com/w40/be.png" alt="" loading="lazy"></td><td class="l pl">Thijs De Ridder</td><td class="l tm">Virginia</td><td class="age">23-298</td><td class="yr">So</td><td class="rat">18.50</td><td>8</td><td>17.4</td><td>7.4</td><td>2.1</td></tr>
+<tr><td class="rk">19</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Trent Perry</td><td class="l tm">UCLA</td><td class="age">21-321</td><td class="yr">Jr</td><td class="rat">18.46</td><td>6</td><td>15.5</td><td>3.8</td><td>5.7</td></tr>
+<tr><td class="rk">20</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Amari Allen</td><td class="l tm">Alabama</td><td class="age">20-303</td><td class="yr">So</td><td class="rat">18.31</td><td>6</td><td>16.5</td><td>5.7</td><td>5.5</td></tr>
+<tr><td class="rk">21</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jake Hall</td><td class="l tm">New Mexico</td><td class="age">20-256</td><td class="yr">So</td><td class="rat">18.22</td><td>5</td><td>25.4</td><td>3.6</td><td>2.0</td></tr>
+<tr><td class="rk">22</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Donovan Dent</td><td class="l tm">LSU</td><td class="age">22-358</td><td class="yr">Sr</td><td class="rat">18.20</td><td>6</td><td>15.3</td><td>1.7</td><td>9.2</td></tr>
+<tr><td class="rk">23</td><td class="fl"><img src="https://flagcdn.com/w40/sn.png" alt="" loading="lazy"></td><td class="l pl">Baye Ndongo</td><td class="l tm">Pittsburgh</td><td class="age">23-328</td><td class="yr">Sr</td><td class="rat">18.08</td><td>7</td><td>18.7</td><td>9.7</td><td>0.9</td></tr>
+<tr><td class="rk">24</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Braden Huff</td><td class="l tm">Gonzaga</td><td class="age">23-089</td><td class="yr">Sr</td><td class="rat">17.97</td><td>5</td><td>16.0</td><td>6.6</td><td>1.6</td></tr>
+<tr><td class="rk">25</td><td class="fl"><img src="https://flagcdn.com/w40/se.png" alt="" loading="lazy"></td><td class="l pl">Will Berg</td><td class="l tm">Wichita State</td><td class="age">23-196</td><td class="yr">Sr</td><td class="rat">17.95</td><td>6</td><td>19.0</td><td>11.8</td><td>1.0</td></tr>
+<tr><td class="rk">26</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jaden Henley</td><td class="l tm">Grand Canyon</td><td class="age">22-215</td><td class="yr">Sr</td><td class="rat">17.72</td><td>4</td><td>18.8</td><td>2.8</td><td>3.5</td></tr>
+<tr><td class="rk">27</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Tre Singleton</td><td class="l tm">Iowa State</td><td class="age"></td><td class="yr">So</td><td class="rat">17.71</td><td>5</td><td>18.6</td><td>6.2</td><td>1.8</td></tr>
+<tr><td class="rk">28</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Cruz Davis</td><td class="l tm">Texas Tech</td><td class="age">23-062</td><td class="yr">Sr</td><td class="rat">17.68</td><td>6</td><td>15.5</td><td>4.8</td><td>4.0</td></tr>
+<tr><td class="rk">29</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Caleb Holt</td><td class="l tm">Arizona</td><td class="age">19-000</td><td class="yr">Fr</td><td class="rat">17.65</td><td>7</td><td>18.4</td><td>7.1</td><td>1.6</td></tr>
+<tr><td class="rk">30</td><td class="fl"><img src="https://flagcdn.com/w40/sk.png" alt="" loading="lazy"></td><td class="l pl">Sebastian Rancik</td><td class="l tm">Florida State</td><td class="age">20-357</td><td class="yr">Jr</td><td class="rat">17.56</td><td>7</td><td>21.0</td><td>4.9</td><td>2.3</td></tr></tbody></table></section>
+<section id="freshmen"><h3>Top 30 Freshmen</h3><table><colgroup><col class="c-rk"><col class="c-fl"><col class="c-pl"><col class="c-tm"><col class="c-age"><col class="c-yr"><col class="c-rat"><col class="c-gp"><col class="c-num"><col class="c-num"><col class="c-num"></colgroup><thead><tr>
+<th></th><th></th>
+<th class="l" data-s="t">Player</th><th class="l" data-s="t"></th><th data-s="n">Age</th><th data-s="t">Yr</th>
+<th data-s="n">Rat</th><th data-s="n">GP</th><th data-s="n">Pts</th>
+<th data-s="n">Reb</th><th data-s="n">Ast</th>
+</tr></thead><tbody><tr><td class="rk">1</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Quentin Coleman</td><td class="l tm">Illinois</td><td class="age">18-140</td><td class="yr">Fr</td><td class="rat">18.61</td><td>6</td><td>20.7</td><td>6.8</td><td>4.7</td></tr>
+<tr><td class="rk">2</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Caleb Holt</td><td class="l tm">Arizona</td><td class="age">19-000</td><td class="yr">Fr</td><td class="rat">17.65</td><td>7</td><td>18.4</td><td>7.1</td><td>1.6</td></tr>
+<tr><td class="rk">3</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jason Crowe</td><td class="l tm">Missouri</td><td class="age">18-130</td><td class="yr">Fr</td><td class="rat">16.89</td><td>7</td><td>21.0</td><td>2.4</td><td>3.4</td></tr>
+<tr><td class="rk">4</td><td class="fl"><img src="https://flagcdn.com/w40/hr.png" alt="" loading="lazy"></td><td class="l pl">Michael Ruzic</td><td class="l tm">LSU</td><td class="age">20-052</td><td class="yr">Fr</td><td class="rat">16.70</td><td>6</td><td>13.7</td><td>8.2</td><td>1.7</td></tr>
+<tr><td class="rk">5</td><td class="fl"><img src="https://flagcdn.com/w40/rs.png" alt="" loading="lazy"></td><td class="l pl">Nikola Kusturica</td><td class="l tm">UCLA</td><td class="age">17-209</td><td class="yr">Fr</td><td class="rat">15.85</td><td>6</td><td>14.7</td><td>5.2</td><td>3.3</td></tr>
+<tr><td class="rk">6</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Ethan Brown</td><td class="l tm">Illinois</td><td class="age">19-001</td><td class="yr">Fr</td><td class="rat">15.76</td><td>7</td><td>12.1</td><td>5.7</td><td>4.6</td></tr>
+<tr><td class="rk">7</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Adonis Ratliff</td><td class="l tm">USC</td><td class="age">19-269</td><td class="yr">Fr</td><td class="rat">15.50</td><td>6</td><td>12.7</td><td>6.8</td><td>1.8</td></tr>
+<tr><td class="rk">8</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Trey Beamer</td><td class="l tm">Florida International</td><td class="age">19-014</td><td class="yr">Fr</td><td class="rat">15.46</td><td>6</td><td>22.8</td><td>2.5</td><td>3.0</td></tr>
+<tr><td class="rk">9</td><td class="fl"><img src="https://flagcdn.com/w40/au.png" alt="" loading="lazy"></td><td class="l pl">Tim Ibukunoluwa</td><td class="l tm">Siena</td><td class="age">19-011</td><td class="yr">Fr</td><td class="rat">15.46</td><td>7</td><td>24.0</td><td>10.4</td><td>2.1</td></tr>
+<tr><td class="rk">10</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Eli Sancomb</td><td class="l tm">Liberty</td><td class="age"></td><td class="yr">Fr</td><td class="rat">15.40</td><td>6</td><td>18.2</td><td>8.8</td><td>3.0</td></tr>
+<tr><td class="rk">11</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Christian Gurdak</td><td class="l tm">Rutgers</td><td class="age"></td><td class="yr">Fr</td><td class="rat">15.14</td><td>7</td><td>16.3</td><td>7.3</td><td>0.9</td></tr>
+<tr><td class="rk">12</td><td class="fl"><img src="https://flagcdn.com/w40/rs.png" alt="" loading="lazy"></td><td class="l pl">Asim Djulovic</td><td class="l tm">Butler</td><td class="age">21-118</td><td class="yr">Fr</td><td class="rat">15.10</td><td>7</td><td>19.4</td><td>5.7</td><td>2.3</td></tr>
+<tr><td class="rk">13</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Toni Bryant</td><td class="l tm">Missouri</td><td class="age">20-018</td><td class="yr">Fr</td><td class="rat">14.25</td><td>7</td><td>11.0</td><td>5.1</td><td>1.3</td></tr>
+<tr><td class="rk">14</td><td class="fl"><img src="https://flagcdn.com/w40/ca.png" alt="" loading="lazy"></td><td class="l pl">Miles Sadler</td><td class="l tm">West Virginia</td><td class="age">19-144</td><td class="yr">Fr</td><td class="rat">14.05</td><td>6</td><td>20.5</td><td>2.0</td><td>5.2</td></tr>
+<tr><td class="rk">15</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Darius Bivins</td><td class="l tm">Saint Marys</td><td class="age"></td><td class="yr">Fr</td><td class="rat">13.52</td><td>7</td><td>12.4</td><td>2.1</td><td>4.3</td></tr>
+<tr><td class="rk">16</td><td class="fl"><img src="https://flagcdn.com/w40/ee.png" alt="" loading="lazy"></td><td class="l pl">Erik Makke</td><td class="l tm">Stephen F Austin</td><td class="age">21-234</td><td class="yr">Fr</td><td class="rat">13.20</td><td>7</td><td>17.9</td><td>2.6</td><td>3.1</td></tr>
+<tr><td class="rk">17</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Gavin Placide</td><td class="l tm">Wake Forest</td><td class="age"></td><td class="yr">Fr</td><td class="rat">13.07</td><td>6</td><td>15.5</td><td>7.8</td><td>1.2</td></tr>
+<tr><td class="rk">18</td><td class="fl"><img src="https://flagcdn.com/w40/si.png" alt="" loading="lazy"></td><td class="l pl">Zak Smrekar</td><td class="l tm">Boston College</td><td class="age">20-107</td><td class="yr">Fr</td><td class="rat">12.86</td><td>6</td><td>14.0</td><td>5.2</td><td>2.8</td></tr>
+<tr><td class="rk">19</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Dylan Mingo</td><td class="l tm">Baylor</td><td class="age">18-050</td><td class="yr">Fr</td><td class="rat">12.21</td><td>6</td><td>13.0</td><td>5.5</td><td>2.8</td></tr>
+<tr><td class="rk">20</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">LeJuan Watts</td><td class="l tm">Washington</td><td class="age">23-046</td><td class="yr">Fr</td><td class="rat">12.20</td><td>6</td><td>15.0</td><td>5.3</td><td>2.7</td></tr>
+<tr><td class="rk">21</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">BJ Ranson</td><td class="l tm">Saint Josephs</td><td class="age"></td><td class="yr">Fr</td><td class="rat">11.75</td><td>7</td><td>16.4</td><td>3.7</td><td>1.4</td></tr>
+<tr><td class="rk">22</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Leroy Blyden</td><td class="l tm">Kansas</td><td class="age"></td><td class="yr">Fr</td><td class="rat">11.71</td><td>7</td><td>12.6</td><td>1.3</td><td>3.1</td></tr>
+<tr><td class="rk">23</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Colben Landrew</td><td class="l tm">UConn</td><td class="age">18-271</td><td class="yr">Fr</td><td class="rat">11.58</td><td>5</td><td>10.8</td><td>5.6</td><td>1.6</td></tr>
+<tr><td class="rk">24</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Joe Philon</td><td class="l tm">UCLA</td><td class="age">19-248</td><td class="yr">Fr</td><td class="rat">11.53</td><td>6</td><td>9.5</td><td>4.2</td><td>0.5</td></tr>
+<tr><td class="rk">25</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Tyran Stokes</td><td class="l tm">Kansas</td><td class="age">19-044</td><td class="yr">Fr</td><td class="rat">11.32</td><td>6</td><td>15.3</td><td>8.0</td><td>2.0</td></tr>
+<tr><td class="rk">26</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Aiden Derkack</td><td class="l tm">Dayton</td><td class="age">19-117</td><td class="yr">Fr</td><td class="rat">10.95</td><td>7</td><td>15.6</td><td>7.4</td><td>2.6</td></tr>
+<tr><td class="rk">27</td><td class="fl"><img src="https://flagcdn.com/w40/it.png" alt="" loading="lazy"></td><td class="l pl">Luigi Suigo</td><td class="l tm">Villanova</td><td class="age">19-300</td><td class="yr">Fr</td><td class="rat">10.45</td><td>6</td><td>12.0</td><td>9.2</td><td>2.8</td></tr>
+<tr><td class="rk">28</td><td class="fl"><img src="https://flagcdn.com/w40/fr.png" alt="" loading="lazy"></td><td class="l pl">Mohamed Diakite</td><td class="l tm">East Texas AM</td><td class="age">20-231</td><td class="yr">Fr</td><td class="rat">10.43</td><td>7</td><td>16.3</td><td>5.4</td><td>1.9</td></tr>
+<tr><td class="rk">29</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Joaquim Boumtje-Boumtje</td><td class="l tm">Duke</td><td class="age">17-179</td><td class="yr">Fr</td><td class="rat">10.36</td><td>6</td><td>12.2</td><td>6.2</td><td>0.3</td></tr>
+<tr><td class="rk">30</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Darius Ratliff</td><td class="l tm">USC</td><td class="age">19-269</td><td class="yr">Fr</td><td class="rat">10.10</td><td>6</td><td>8.8</td><td>4.8</td><td>1.2</td></tr></tbody></table></section>
+<section id="pg"><h3>Top 10 Point Guards</h3><table><colgroup><col class="c-rk"><col class="c-fl"><col class="c-pl"><col class="c-tm"><col class="c-age"><col class="c-yr"><col class="c-rat"><col class="c-gp"><col class="c-num"><col class="c-num"><col class="c-num"></colgroup><thead><tr>
+<th></th><th></th>
+<th class="l" data-s="t">Player</th><th class="l" data-s="t"></th><th data-s="n">Age</th><th data-s="t">Yr</th>
+<th data-s="n">Rat</th><th data-s="n">GP</th><th data-s="n">Pts</th>
+<th data-s="n">Reb</th><th data-s="n">Ast</th>
+</tr></thead><tbody><tr><td class="rk">1</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Dedan Thomas</td><td class="l tm">Houston</td><td class="age">21-078</td><td class="yr">Sr</td><td class="rat">24.81</td><td>6</td><td>20.0</td><td>1.7</td><td>5.7</td></tr>
+<tr><td class="rk">2</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Dior Johnson</td><td class="l tm">UCF</td><td class="age">22-301</td><td class="yr">Sr</td><td class="rat">23.22</td><td>6</td><td>29.0</td><td>4.2</td><td>3.5</td></tr>
+<tr><td class="rk">3</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Tyler Tanner</td><td class="l tm">Vanderbilt</td><td class="age">20-297</td><td class="yr">Jr</td><td class="rat">22.72</td><td>7</td><td>18.9</td><td>6.3</td><td>3.6</td></tr>
+<tr><td class="rk">4</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jayden Reid</td><td class="l tm">Memphis</td><td class="age">22-085</td><td class="yr">Sr</td><td class="rat">20.67</td><td>5</td><td>21.2</td><td>2.6</td><td>4.6</td></tr>
+<tr><td class="rk">5</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jeremy Fears</td><td class="l tm">Michigan State</td><td class="age">21-220</td><td class="yr">Sr</td><td class="rat">19.87</td><td>6</td><td>16.7</td><td>2.0</td><td>9.3</td></tr>
+<tr><td class="rk">6</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Ben Hammond</td><td class="l tm">Virginia Tech</td><td class="age">22-054</td><td class="yr">Jr</td><td class="rat">19.59</td><td>7</td><td>20.6</td><td>3.3</td><td>5.1</td></tr>
+<tr><td class="rk">7</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Trent Perry</td><td class="l tm">UCLA</td><td class="age">21-321</td><td class="yr">Jr</td><td class="rat">18.46</td><td>6</td><td>15.5</td><td>3.8</td><td>5.7</td></tr>
+<tr><td class="rk">8</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Donovan Dent</td><td class="l tm">LSU</td><td class="age">22-358</td><td class="yr">Sr</td><td class="rat">18.20</td><td>6</td><td>15.3</td><td>1.7</td><td>9.2</td></tr>
+<tr><td class="rk">9</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Cruz Davis</td><td class="l tm">Texas Tech</td><td class="age">23-062</td><td class="yr">Sr</td><td class="rat">17.68</td><td>6</td><td>15.5</td><td>4.8</td><td>4.0</td></tr>
+<tr><td class="rk">10</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Silas Demary</td><td class="l tm">UConn</td><td class="age">22-149</td><td class="yr">Sr</td><td class="rat">17.45</td><td>5</td><td>13.8</td><td>4.8</td><td>6.2</td></tr></tbody></table></section>
+<section id="sg"><h3>Top 10 Shooting Guards</h3><table><colgroup><col class="c-rk"><col class="c-fl"><col class="c-pl"><col class="c-tm"><col class="c-age"><col class="c-yr"><col class="c-rat"><col class="c-gp"><col class="c-num"><col class="c-num"><col class="c-num"></colgroup><thead><tr>
+<th></th><th></th>
+<th class="l" data-s="t">Player</th><th class="l" data-s="t"></th><th data-s="n">Age</th><th data-s="t">Yr</th>
+<th data-s="n">Rat</th><th data-s="n">GP</th><th data-s="n">Pts</th>
+<th data-s="n">Reb</th><th data-s="n">Ast</th>
+</tr></thead><tbody><tr><td class="rk">1</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Rodney Rice</td><td class="l tm">USC</td><td class="age">24-004</td><td class="yr">Sr</td><td class="rat">22.77</td><td>6</td><td>20.8</td><td>4.0</td><td>5.8</td></tr>
+<tr><td class="rk">2</td><td class="fl"><img src="https://flagcdn.com/w40/gr.png" alt="" loading="lazy"></td><td class="l pl">Andrej Stojakovic</td><td class="l tm">Illinois</td><td class="age">22-100</td><td class="yr">Sr</td><td class="rat">22.08</td><td>7</td><td>24.3</td><td>5.0</td><td>3.3</td></tr>
+<tr><td class="rk">3</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Mason Falslev</td><td class="l tm">Utah State</td><td class="age">25-026</td><td class="yr">Sr</td><td class="rat">19.01</td><td>5</td><td>21.2</td><td>8.8</td><td>5.2</td></tr>
+<tr><td class="rk">4</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Quentin Coleman</td><td class="l tm">Illinois</td><td class="age">18-140</td><td class="yr">Fr</td><td class="rat">18.61</td><td>6</td><td>20.7</td><td>6.8</td><td>4.7</td></tr>
+<tr><td class="rk">5</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jake Hall</td><td class="l tm">New Mexico</td><td class="age">20-256</td><td class="yr">So</td><td class="rat">18.22</td><td>5</td><td>25.4</td><td>3.6</td><td>2.0</td></tr>
+<tr><td class="rk">6</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Caleb Holt</td><td class="l tm">Arizona</td><td class="age">19-000</td><td class="yr">Fr</td><td class="rat">17.65</td><td>7</td><td>18.4</td><td>7.1</td><td>1.6</td></tr>
+<tr><td class="rk">7</td><td class="fl"><img src="https://flagcdn.com/w40/lt.png" alt="" loading="lazy"></td><td class="l pl">Mantas Juzenas</td><td class="l tm">Saint Marys</td><td class="age">20-009</td><td class="yr">So</td><td class="rat">17.25</td><td>7</td><td>20.6</td><td>9.3</td><td>3.1</td></tr>
+<tr><td class="rk">8</td><td class="fl"><img src="https://flagcdn.com/w40/bj.png" alt="" loading="lazy"></td><td class="l pl">Tounde Yessoufou</td><td class="l tm">St Johns</td><td class="age">20-194</td><td class="yr">So</td><td class="rat">17.16</td><td>6</td><td>15.8</td><td>7.2</td><td>1.3</td></tr>
+<tr><td class="rk">9</td><td class="fl"><img src="https://flagcdn.com/w40/bb.png" alt="" loading="lazy"></td><td class="l pl">Kyrone Alexander</td><td class="l tm">Boston University</td><td class="age">23-037</td><td class="yr">Sr</td><td class="rat">16.77</td><td>8</td><td>21.0</td><td>6.4</td><td>2.1</td></tr>
+<tr><td class="rk">10</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Davis Fogle</td><td class="l tm">Gonzaga</td><td class="age">20-172</td><td class="yr">So</td><td class="rat">16.76</td><td>5</td><td>16.8</td><td>6.0</td><td>4.2</td></tr></tbody></table></section>
+<section id="sf"><h3>Top 10 Small Forwards</h3><table><colgroup><col class="c-rk"><col class="c-fl"><col class="c-pl"><col class="c-tm"><col class="c-age"><col class="c-yr"><col class="c-rat"><col class="c-gp"><col class="c-num"><col class="c-num"><col class="c-num"></colgroup><thead><tr>
+<th></th><th></th>
+<th class="l" data-s="t">Player</th><th class="l" data-s="t"></th><th data-s="n">Age</th><th data-s="t">Yr</th>
+<th data-s="n">Rat</th><th data-s="n">GP</th><th data-s="n">Pts</th>
+<th data-s="n">Reb</th><th data-s="n">Ast</th>
+</tr></thead><tbody><tr><td class="rk">1</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Pryce Sandfort</td><td class="l tm">Nebraska</td><td class="age">22-155</td><td class="yr">Jr</td><td class="rat">23.28</td><td>6</td><td>20.0</td><td>5.2</td><td>2.8</td></tr>
+<tr><td class="rk">2</td><td class="fl"><img src="https://flagcdn.com/w40/de.png" alt="" loading="lazy"></td><td class="l pl">Ivan Kharchenkov</td><td class="l tm">Arizona</td><td class="age">20-066</td><td class="yr">So</td><td class="rat">20.48</td><td>7</td><td>21.7</td><td>7.4</td><td>5.4</td></tr>
+<tr><td class="rk">3</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Alijah Arenas</td><td class="l tm">USC</td><td class="age">19-254</td><td class="yr">So</td><td class="rat">20.24</td><td>6</td><td>21.3</td><td>4.0</td><td>2.2</td></tr>
+<tr><td class="rk">4</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Amari Allen</td><td class="l tm">Alabama</td><td class="age">20-303</td><td class="yr">So</td><td class="rat">18.31</td><td>6</td><td>16.5</td><td>5.7</td><td>5.5</td></tr>
+<tr><td class="rk">5</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Jaden Henley</td><td class="l tm">Grand Canyon</td><td class="age">22-215</td><td class="yr">Sr</td><td class="rat">17.72</td><td>4</td><td>18.8</td><td>2.8</td><td>3.5</td></tr>
+<tr><td class="rk">6</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Keyshawn Hall</td><td class="l tm">St Johns</td><td class="age">23-230</td><td class="yr">Sr</td><td class="rat">16.26</td><td>6</td><td>18.5</td><td>5.2</td><td>3.2</td></tr>
+<tr><td class="rk">7</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Josh Scovens</td><td class="l tm">Davidson</td><td class="age">22-308</td><td class="yr">Sr</td><td class="rat">16.03</td><td>7</td><td>16.6</td><td>7.0</td><td>2.1</td></tr>
+<tr><td class="rk">8</td><td class="fl"><img src="https://flagcdn.com/w40/au.png" alt="" loading="lazy"></td><td class="l pl">Tim Ibukunoluwa</td><td class="l tm">Siena</td><td class="age">19-011</td><td class="yr">Fr</td><td class="rat">15.46</td><td>7</td><td>24.0</td><td>10.4</td><td>2.1</td></tr>
+<tr><td class="rk">9</td><td class="fl"><img src="https://flagcdn.com/w40/rs.png" alt="" loading="lazy"></td><td class="l pl">Asim Djulovic</td><td class="l tm">Butler</td><td class="age">21-118</td><td class="yr">Fr</td><td class="rat">15.10</td><td>7</td><td>19.4</td><td>5.7</td><td>2.3</td></tr>
+<tr><td class="rk">10</td><td class="fl"><img src="https://flagcdn.com/w40/fr.png" alt="" loading="lazy"></td><td class="l pl">Roman Domon</td><td class="l tm">Murray State</td><td class="age">21-050</td><td class="yr">So</td><td class="rat">14.91</td><td>7</td><td>23.0</td><td>5.9</td><td>4.0</td></tr></tbody></table></section>
+<section id="pf"><h3>Top 10 Power Forwards</h3><table><colgroup><col class="c-rk"><col class="c-fl"><col class="c-pl"><col class="c-tm"><col class="c-age"><col class="c-yr"><col class="c-rat"><col class="c-gp"><col class="c-num"><col class="c-num"><col class="c-num"></colgroup><thead><tr>
+<th></th><th></th>
+<th class="l" data-s="t">Player</th><th class="l" data-s="t"></th><th data-s="n">Age</th><th data-s="t">Yr</th>
+<th data-s="n">Rat</th><th data-s="n">GP</th><th data-s="n">Pts</th>
+<th data-s="n">Reb</th><th data-s="n">Ast</th>
+</tr></thead><tbody><tr><td class="rk">1</td><td class="fl"><img src="https://flagcdn.com/w40/lt.png" alt="" loading="lazy"></td><td class="l pl">Paulius Murauskas</td><td class="l tm">Arizona State</td><td class="age">22-284</td><td class="yr">Sr</td><td class="rat">23.43</td><td>5</td><td>26.0</td><td>9.2</td><td>3.0</td></tr>
+<tr><td class="rk">2</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Thomas Haugh</td><td class="l tm">Florida</td><td class="age">23-141</td><td class="yr">Sr</td><td class="rat">19.44</td><td>8</td><td>17.4</td><td>7.0</td><td>2.5</td></tr>
+<tr><td class="rk">3</td><td class="fl"><img src="https://flagcdn.com/w40/be.png" alt="" loading="lazy"></td><td class="l pl">Thijs De Ridder</td><td class="l tm">Virginia</td><td class="age">23-298</td><td class="yr">So</td><td class="rat">18.50</td><td>8</td><td>17.4</td><td>7.4</td><td>2.1</td></tr>
+<tr><td class="rk">4</td><td class="fl"><img src="https://flagcdn.com/w40/sn.png" alt="" loading="lazy"></td><td class="l pl">Baye Ndongo</td><td class="l tm">Pittsburgh</td><td class="age">23-328</td><td class="yr">Sr</td><td class="rat">18.08</td><td>7</td><td>18.7</td><td>9.7</td><td>0.9</td></tr>
+<tr><td class="rk">5</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Braden Huff</td><td class="l tm">Gonzaga</td><td class="age">23-089</td><td class="yr">Sr</td><td class="rat">17.97</td><td>5</td><td>16.0</td><td>6.6</td><td>1.6</td></tr>
+<tr><td class="rk">6</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Tre Singleton</td><td class="l tm">Iowa State</td><td class="age"></td><td class="yr">So</td><td class="rat">17.71</td><td>5</td><td>18.6</td><td>6.2</td><td>1.8</td></tr>
+<tr><td class="rk">7</td><td class="fl"><img src="https://flagcdn.com/w40/sk.png" alt="" loading="lazy"></td><td class="l pl">Sebastian Rancik</td><td class="l tm">Florida State</td><td class="age">20-357</td><td class="yr">Jr</td><td class="rat">17.56</td><td>7</td><td>21.0</td><td>4.9</td><td>2.3</td></tr>
+<tr><td class="rk">8</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Mohammad Habhab</td><td class="l tm">Eastern Michigan</td><td class="age">20-220</td><td class="yr">So</td><td class="rat">17.33</td><td>6</td><td>17.7</td><td>7.2</td><td>3.3</td></tr>
+<tr><td class="rk">9</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Brady Koehler</td><td class="l tm">Notre Dame</td><td class="age">20-089</td><td class="yr">So</td><td class="rat">17.24</td><td>8</td><td>17.5</td><td>7.1</td><td>2.0</td></tr>
+<tr><td class="rk">10</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Amani Hansberry</td><td class="l tm">Virginia Tech</td><td class="age">22-045</td><td class="yr">Sr</td><td class="rat">15.95</td><td>7</td><td>15.9</td><td>5.3</td><td>3.9</td></tr></tbody></table></section>
+<section id="c"><h3>Top 10 Centers</h3><table><colgroup><col class="c-rk"><col class="c-fl"><col class="c-pl"><col class="c-tm"><col class="c-age"><col class="c-yr"><col class="c-rat"><col class="c-gp"><col class="c-num"><col class="c-num"><col class="c-num"></colgroup><thead><tr>
+<th></th><th></th>
+<th class="l" data-s="t">Player</th><th class="l" data-s="t"></th><th data-s="n">Age</th><th data-s="t">Yr</th>
+<th data-s="n">Rat</th><th data-s="n">GP</th><th data-s="n">Pts</th>
+<th data-s="n">Reb</th><th data-s="n">Ast</th>
+</tr></thead><tbody><tr><td class="rk">1</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Vince Iwuchukwu</td><td class="l tm">Georgetown</td><td class="age">23-222</td><td class="yr">Sr</td><td class="rat">20.77</td><td>6</td><td>20.8</td><td>9.2</td><td>0.5</td></tr>
+<tr><td class="rk">2</td><td class="fl"><img src="https://flagcdn.com/w40/lt.png" alt="" loading="lazy"></td><td class="l pl">Motiejus Krivas</td><td class="l tm">Arizona</td><td class="age">21-359</td><td class="yr">Sr</td><td class="rat">19.29</td><td>7</td><td>17.9</td><td>8.9</td><td>2.4</td></tr>
+<tr><td class="rk">3</td><td class="fl"><img src="https://flagcdn.com/w40/se.png" alt="" loading="lazy"></td><td class="l pl">Will Berg</td><td class="l tm">Wichita State</td><td class="age">23-196</td><td class="yr">Sr</td><td class="rat">17.95</td><td>6</td><td>19.0</td><td>11.8</td><td>1.0</td></tr>
+<tr><td class="rk">4</td><td class="fl"><img src="https://flagcdn.com/w40/hr.png" alt="" loading="lazy"></td><td class="l pl">Michael Ruzic</td><td class="l tm">LSU</td><td class="age">20-052</td><td class="yr">Fr</td><td class="rat">16.70</td><td>6</td><td>13.7</td><td>8.2</td><td>1.7</td></tr>
+<tr><td class="rk">5</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Daniel Jacobsen</td><td class="l tm">Purdue</td><td class="age">20-214</td><td class="yr">Jr</td><td class="rat">16.59</td><td>7</td><td>16.7</td><td>7.9</td><td>2.4</td></tr>
+<tr><td class="rk">6</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Patrick Wessler</td><td class="l tm">UNC Wilmington</td><td class="age"></td><td class="yr">Sr</td><td class="rat">16.42</td><td>4</td><td>22.8</td><td>13.0</td><td>2.0</td></tr>
+<tr><td class="rk">7</td><td class="fl"><img src="https://flagcdn.com/w40/cd.png" alt="" loading="lazy"></td><td class="l pl">Flory Bidunga</td><td class="l tm">Louisville</td><td class="age">21-189</td><td class="yr">Jr</td><td class="rat">16.35</td><td>5</td><td>13.2</td><td>9.2</td><td>1.8</td></tr>
+<tr><td class="rk">8</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Ben Bill</td><td class="l tm">St Bonaventure</td><td class="age"></td><td class="yr">Sr</td><td class="rat">16.34</td><td>8</td><td>15.6</td><td>7.1</td><td>3.1</td></tr>
+<tr><td class="rk">9</td><td class="fl"><img src="https://flagcdn.com/w40/hr.png" alt="" loading="lazy"></td><td class="l pl">Ivan Juric</td><td class="l tm">Penn State</td><td class="age">20-107</td><td class="yr">So</td><td class="rat">15.77</td><td>6</td><td>16.7</td><td>13.2</td><td>1.7</td></tr>
+<tr><td class="rk">10</td><td class="fl"><img src="https://flagcdn.com/w40/us.png" alt="" loading="lazy"></td><td class="l pl">Patrick Ngongba</td><td class="l tm">Duke</td><td class="age">20-285</td><td class="yr">Jr</td><td class="rat">15.74</td><td>6</td><td>15.5</td><td>7.5</td><td>2.7</td></tr></tbody></table></section>
+</div>
+<script>
+(function(){
+  // SORTING AND THE TOGGLE, PER TABLE, so one section's state does not follow the
+  // reader into another.
+  [].slice.call(document.querySelectorAll("table")).forEach(function(tbl){
+    var tb = tbl.querySelector("tbody");
+    if(!tb) return;
+    var all = [].slice.call(tb.querySelectorAll("tr"));
+    var key = -1, desc = true;
+
+    var ths = [].slice.call(tbl.querySelectorAll("thead th"));
+    ths.forEach(function(th, i){
+      if(!th.getAttribute("data-s")) return;
+      th.addEventListener("click", function(){
+        // The same column again reverses; a new one starts descending, which is
+        // what a reader wants from a rating and from every per-game figure here.
+        if(key === i) desc = !desc; else { key = i; desc = true; }
+        var numeric = th.getAttribute("data-s") === "n";
+        all.sort(function(a, b){
+          var x = a.cells[i].textContent.trim(), y = b.cells[i].textContent.trim();
+          if(numeric){
+            var nv = function(v){ var m = /^(\d+)-(\d+)$/.exec(v); return m ? +m[1] + m[2] / 1000 : (parseFloat(v) || 0); }; var nx = nv(x), ny = nv(y);
+            return desc ? ny - nx : nx - ny;
+          }
+          return desc ? y.localeCompare(x) : x.localeCompare(y);
+        });
+        ths.forEach(function(o){ o.removeAttribute("aria-sort"); });
+        th.setAttribute("aria-sort", desc ? "descending" : "ascending");
+        draw();
+      });
+    });
+
+    function draw(){
+      var show = all;
+      tb.innerHTML = "";
+      var keep = tbl.getAttribute("data-rank") === "keep";
+      show.forEach(function(r, n){
+        // Renumbered so a sorted list reads 1..N -- EXCEPT where the number is a
+        // league position rather than a row count, which a team table carries and
+        // must not lose the moment someone sorts it.
+        if(!keep) r.cells[0].textContent = n + 1;
+        r.className = "";
+        tb.appendChild(r);
+      });
+    }
+  });
+})();
+</script>
+</body></html>
